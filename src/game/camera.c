@@ -1185,6 +1185,22 @@ void mode_radial_camera(struct Camera *c) {
     pan_ahead_of_player(c);
 }
 
+//aglab!!!!
+s32 snap_to_45_degrees(s16 angle) {
+    if (angle % DEGREES(45)) {
+        s16 d1 = ABS(angle) % DEGREES(45);
+        s16 d2 = DEGREES(45) - d1;
+        if (angle > 0) {
+            if (d1 < d2) return angle - d1;
+            else return angle + d2;
+        } else {
+            if (d1 < d2) return angle + d1;
+            else return angle - d2;
+        }
+    }
+    return angle;
+}
+
 /**
  * A mode that only has 8 camera angles, 45 degrees apart
  */
@@ -11932,17 +11948,17 @@ void mode_rom_hack_camera(struct Camera *c) {
     }
 
     //aglab!!!!
-    else if (gPlayer1Controller->buttonPressed & U_JPAD) {
+    else if (gMarioStates[0].controller->buttonPressed & U_JPAD) {
         s8DirModeYawOffset = 0;
         s8DirModeYawOffset = gMarioState->faceAngle[1] - 0x8000;
     }
-    else if (gPlayer1Controller->buttonDown & L_JPAD) {
+    else if (gMarioStates[0].controller->buttonDown & L_JPAD) {
         s8DirModeYawOffset -= DEGREES(2);
     }
-    else if (gPlayer1Controller->buttonDown & R_JPAD) {
+    else if (gMarioStates[0].controller->buttonDown & R_JPAD) {
         s8DirModeYawOffset += DEGREES(2);
     }
-    else if (gPlayer1Controller->buttonPressed & D_JPAD) {
+    else if (gMarioStates[0].controller->buttonPressed & D_JPAD) {
         s8DirModeYawOffset = snap_to_45_degrees(s8DirModeYawOffset);
     }
 

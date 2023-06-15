@@ -1203,6 +1203,20 @@ void mode_8_directions_camera(struct Camera *c) {
         s8DirModeYawOffset -= DEGREES(45);
         play_sound_cbutton_side();
     }
+    //aglab!!!!
+    else if (gPlayer1Controller->buttonPressed & U_JPAD) {
+        s8DirModeYawOffset = 0;
+        s8DirModeYawOffset = gMarioState->faceAngle[1] - 0x8000;
+    }
+    else if (gPlayer1Controller->buttonDown & L_JPAD) {
+        s8DirModeYawOffset -= DEGREES(2);
+    }
+    else if (gPlayer1Controller->buttonDown & R_JPAD) {
+        s8DirModeYawOffset += DEGREES(2);
+    }
+    else if (gPlayer1Controller->buttonPressed & D_JPAD) {
+        s8DirModeYawOffset = snap_to_45_degrees(s8DirModeYawOffset);
+    }
 
     lakitu_zoom(400.f, 0x900);
     c->nextYaw = update_8_directions_camera(c, c->focus, pos);
@@ -11915,6 +11929,21 @@ void mode_rom_hack_camera(struct Camera *c) {
             play_sound_button_change_blocked();
         }
         sRomHackZoom = 0;
+    }
+
+    //aglab!!!!
+    else if (gPlayer1Controller->buttonPressed & U_JPAD) {
+        s8DirModeYawOffset = 0;
+        s8DirModeYawOffset = gMarioState->faceAngle[1] - 0x8000;
+    }
+    else if (gPlayer1Controller->buttonDown & L_JPAD) {
+        s8DirModeYawOffset -= DEGREES(2);
+    }
+    else if (gPlayer1Controller->buttonDown & R_JPAD) {
+        s8DirModeYawOffset += DEGREES(2);
+    }
+    else if (gPlayer1Controller->buttonPressed & D_JPAD) {
+        s8DirModeYawOffset = snap_to_45_degrees(s8DirModeYawOffset);
     }
 
     // clamp yaw
